@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import "./globals.css";
+import { archivo } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Anastasiya M. — UI/UX designer",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html lang="en" className={archivo.variable}>
       <body>{children}</body>
     </html>
   );

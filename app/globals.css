@@ -1,2 +1,104 @@
 ﻿@import "tailwindcss";
 
+/*
+  Токени дизайн-системи. Джерело: узгоджена таблиця токенів (макет «Hero and cases»).
+  Відступи окремо не оголошуємо: беремо 9 кроків стандартної шкали Tailwind
+  (4, 8, 12, 16, 24, 32, 40, 48, 64 px = 1, 2, 3, 4, 6, 8, 10, 12, 16).
+*/
+@theme {
+  /* ---------- Кольори (за ролями), стандартну палітру скидаємо ---------- */
+  --color-*: initial;
+
+  --color-canvas: #fbf9f5; /* фон сторінки */
+  --color-canvas-dark: #202020; /* фон hero і футера */
+  --color-text: #202020; /* основний текст і текст на картках */
+  --color-text-on-dark: #ffffff; /* текст на темному фоні й на плашках */
+  --color-text-muted: #5c574f; /* приглушений текст, неактивні номери, неактивні крапки hero */
+  --color-text-muted-on-dark: #c9c9c9; /* приглушений текст на темному фоні */
+  --color-line: #c9c3b6; /* розділювачі на світлому і неактивні крапки рейки */
+  --color-line-dark: #444444; /* розділювачі на темному фоні */
+
+  /* Кольори проєктів: це тема портфоліо. Лише заливки й маркери, не текст на canvas. */
+  --color-project-miri: #d2a574;
+  --color-project-rentflow: #f0dc8c;
+  --color-project-studio: #b9c4a0;
+  --color-project-sema: #c4785a;
+
+  --color-link-hover: var(--color-project-miri); /* ховер посилань на темному фоні */
+
+  /* ---------- Розміри тексту: розмір, висота рядка, трекінг, жирність ---------- */
+  --text-*: initial;
+
+  --text-display-xl: clamp(56px, 9.6vw, 128px); /* hero-заголовок */
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: 0;
+  --text-display-xl--font-weight: 200;
+
+  /* Заголовок «Projects» і email у футері. Для email мінімум 34px (див. CLAUDE.md). */
+  --text-display-l: clamp(56px, 9vw, 112px);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: -0.03em;
+  --text-display-l--font-weight: 300;
+
+  --text-display-m: clamp(52px, 6.4vw, 84px); /* назва картки */
+  --text-display-m--line-height: 0.95;
+  --text-display-m--letter-spacing: -0.03em;
+  --text-display-m--font-weight: 300;
+
+  --text-display-s: clamp(16px, 2.3vw, 30px); /* підзаголовок картки, окремий стиль */
+  --text-display-s--line-height: 0.95;
+  --text-display-s--letter-spacing: -0.01em;
+  --text-display-s--font-weight: 300;
+
+  --text-body: 16px; /* основний текст */
+  --text-body--line-height: 1.5;
+  --text-body--letter-spacing: 0;
+  --text-body--font-weight: 400;
+
+  --text-label: 14px; /* мітки: меню, мета картки, нижні смуги (великі літери додаємо в компоненті) */
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.06em;
+  --text-label--font-weight: 400;
+
+  --text-label-strong: 14px; /* назви «Question» і «Decision» у картках */
+  --text-label-strong--line-height: 1.5;
+  --text-label-strong--letter-spacing: 0.08em;
+  --text-label-strong--font-weight: 700;
+
+  --text-small: 14px; /* плашки */
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: 0;
+  --text-small--font-weight: 400;
+
+  /* ---------- Радіуси, стандартні скидаємо ---------- */
+  --radius-*: initial;
+
+  --radius-control: 9999px; /* плашки й круглі елементи (кнопок і полів у макеті немає) */
+  --radius-card: 0px; /* картки з прямими кутами */
+  --radius-image: 12px; /* скріншоти екранів (додатково до двох, бо це узгоджене значення) */
+
+  /* ---------- Тінь ---------- */
+  --shadow-screen: 0 24px 48px -16px rgb(0 0 0 / 0.45); /* скріншоти екранів */
+
+  /* ---------- Пропорції картинок ----------
+     --aspect-* не оголошуємо: у таблиці пропорцій немає, скріншоти показуємо
+     у природних пропорціях. Стандартні пропорції Tailwind не скинуто. */
+
+  /* ---------- Токени розкладки сторінки ----------
+     ЛИШЕ ДЛЯ СТОРІНОК, не для компонентів: інакше компонент перестане
+     підходити до інших місць. */
+  --container-page: 1232px; /* ширина контенту: max-w-page */
+  --spacing-section: 64px; /* відстань між великими секціями: gap-section, pt-section тощо */
+}
+
+/* Шрифт підключено через next/font у app/fonts.ts, змінна --font-archivo.
+   inline потрібен, бо змінну задає клас на <html>. */
+@theme inline {
+  --font-sans: var(--font-archivo), Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-body text-text;
+  }
+}
