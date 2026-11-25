@@ -1,0 +1,241 @@
+import { useEffect, useState } from "react";
+import { Meta, ColorPalette, ColorItem, Unstyled } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Tokens" />
+
+export const pairs = [
+  ["text", "canvas"],
+  ["text-muted", "canvas"],
+  ["text-on-dark", "canvas-dark"],
+  ["text-muted-on-dark", "canvas-dark"],
+  ["link-hover", "canvas-dark"],
+  ["text", "project-miri"],
+  ["text", "project-rentflow"],
+  ["text", "project-studio"],
+  ["text", "project-sema"],
+];
+
+export const toRgb = (value) => {
+  const ctx = document.createElement("canvas").getContext("2d");
+  ctx.fillStyle = value;
+  ctx.fillRect(0, 0, 1, 1);
+  return Array.from(ctx.getImageData(0, 0, 1, 1).data.slice(0, 3));
+};
+
+export const luminance = ([r, g, b]) => {
+  const [lr, lg, lb] = [r, g, b].map((c) => {
+    const v = c / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
+};
+
+export const verdict = (ratio) =>
+  ratio >= 7
+    ? "AAA: підходить для будь-якого тексту"
+    : ratio >= 4.5
+      ? "AA: підходить для будь-якого тексту"
+      : ratio >= 3
+        ? "Лише великий текст (від 24 px або 19 px жирного)"
+        : "Не проходить";
+
+export const ContrastTable = () => {
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    const css = getComputedStyle(document.documentElement);
+    const read = (name) => {
+      const probe = document.createElement("span");
+      probe.style.color = "var(--color-" + name + ")";
+      document.body.appendChild(probe);
+      const resolved = getComputedStyle(probe).color;
+      probe.remove();
+      return toRgb(resolved);
+    };
+    setRows(
+      pairs.map(([fg, bg]) => {
+        const a = luminance(read(fg));
+        const b = luminance(read(bg));
+        const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+        return { fg, bg, ratio };
+      }),
+    );
+  }, []);
+  return (
+    <Unstyled>
+      <table className="w-full border-collapse text-small text-text">
+        <thead>
+          <tr className="border-b border-line text-left">
+            <th className="py-2 pr-4">Пара (текст на фоні)</th>
+            <th className="py-2 pr-4">Контраст</th>
+            <th className="py-2">Висновок</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(({ fg, bg, ratio }) => (
+            <tr key={fg + bg} className="border-b border-line">
+              <td className="py-2 pr-4">
+                <span className="mr-2 inline-block rounded-control border border-line px-3 py-1" style={{ background: "var(--color-" + bg + ")", color: "var(--color-" + fg + ")" }}>Aa</span>
+                {fg} на {bg}
+              </td>
+              <td className="py-2 pr-4">{ratio.toFixed(2)} : 1</td>
+              <td className="py-2">{verdict(ratio)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Unstyled>
+  );
+};
+
+# Токени
+
+Усі значення беруться зі змінних у блоці `@theme` у `app/globals.css`. Тут їх немає в жодному вигляді, окрім змінних: змінився токен — змінилась і ця сторінка.
+
+## Кольори
+
+<ColorPalette>
+  <ColorItem
+    title="Поверхні"
+    subtitle="canvas, canvas-dark"
+    colors={{
+      canvas: "var(--color-canvas)",
+      "canvas-dark": "var(--color-canvas-dark)",
+    }}
+  />
+  <ColorItem
+    title="Лінії"
+    subtitle="line, line-dark"
+    colors={{
+      line: "var(--color-line)",
+      "line-dark": "var(--color-line-dark)",
+    }}
+  />
+  <ColorItem
+    title="Текст"
+    subtitle="text, text-on-dark"
+    colors={{
+      text: "var(--color-text)",
+      "text-on-dark": "var(--color-text-on-dark)",
+    }}
+  />
+  <ColorItem
+    title="Приглушений текст"
+    subtitle="text-muted, text-muted-on-dark"
+    colors={{
+      "text-muted": "var(--color-text-muted)",
+      "text-muted-on-dark": "var(--color-text-muted-on-dark)",
+    }}
+  />
+  <ColorItem
+    title="Проєкти"
+    subtitle="лише заливки й маркери, не текст на canvas"
+    colors={{
+      "project-miri": "var(--color-project-miri)",
+      "project-rentflow": "var(--color-project-rentflow)",
+      "project-studio": "var(--color-project-studio)",
+      "project-sema": "var(--color-project-sema)",
+    }}
+  />
+  <ColorItem
+    title="Інтерактив"
+    subtitle="link-hover"
+    colors={{ "link-hover": "var(--color-link-hover)" }}
+  />
+</ColorPalette>
+
+## Контраст пар
+
+Контраст рахується за формулою WCAG зі змінних `@theme`, значень у коді немає. Для звичайного тексту потрібно не менше 4.5 : 1, для великого не менше 3 : 1.
+
+<ContrastTable />
+
+## Шкала шрифтів
+
+Шрифт: `font-sans` (Archivo, запасний Arial). Великі літери для `label` і `label-strong` додає компонент (`uppercase`).
+
+<Unstyled>
+  <table className="w-full border-collapse text-small text-text">
+    <thead>
+      <tr className="border-b border-line text-left">
+        <th className="py-2 pr-4">Клас</th>
+        <th className="py-2 pr-4">Роль</th>
+        <th className="py-2">Зразок</th>
+      </tr>
+    </thead>
+    <tbody>
+      {[
+        ["text-display-xl", "Заголовок hero", "text-display-xl"],
+        ["text-display-l", "Заголовок «Projects», email у футері", "text-display-l"],
+        ["text-display-m", "Назва картки", "text-display-m"],
+        ["text-display-s", "Підзаголовок картки", "text-display-s"],
+        ["text-body", "Основний текст", "text-body"],
+        ["text-label", "Мітки: меню, мета картки, нижні смуги", "text-label uppercase"],
+        ["text-label-strong", "Назви «Question» і «Decision» у картках", "text-label-strong uppercase"],
+        ["text-small", "Плашки", "text-small"],
+      ].map(([name, role, cls]) => (
+        <tr key={name} className="border-b border-line align-middle">
+          <td className="py-4 pr-4 whitespace-nowrap">{name}</td>
+          <td className="py-4 pr-4">{role}</td>
+          <td className="py-4">
+            <span className={`font-sans ${cls} text-text`}>Hamburg Design 123</span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Unstyled>
+
+## Радіуси
+
+<Unstyled>
+<div className="flex flex-wrap gap-8">
+  {[
+    ["control", "rounded-control"],
+    ["card", "rounded-card"],
+    ["image", "rounded-image"],
+  ].map(([name, cls]) => (
+    <div key={name} className="flex flex-col items-start gap-2">
+      <div className={`${cls} h-16 w-32 border border-text bg-project-miri`} />
+      <span className="text-small text-text">{name}</span>
+    </div>
+  ))}
+</div>
+</Unstyled>
+
+## Тінь
+
+<Unstyled>
+<div className="flex flex-col items-start gap-2 p-8">
+  <div className="h-16 w-32 rounded-image bg-canvas shadow-screen" />
+  <span className="text-small text-text">shadow-screen</span>
+</div>
+</Unstyled>
+
+## Пропорції
+
+Токенів `--aspect-*` у системі немає: скріншоти показуємо в природних пропорціях без обрізання.
+
+## Відступи
+
+Окремих токенів немає, беремо 9 кроків шкали Tailwind: `1, 2, 3, 4, 6, 8, 10, 12, 16`.
+
+<Unstyled>
+<div className="flex flex-col gap-2">
+  {[
+    ["1", "w-1"],
+    ["2", "w-2"],
+    ["3", "w-3"],
+    ["4", "w-4"],
+    ["6", "w-6"],
+    ["8", "w-8"],
+    ["10", "w-10"],
+    ["12", "w-12"],
+    ["16", "w-16"],
+  ].map(([name, cls]) => (
+    <div key={name} className="flex items-center gap-4">
+      <span className="w-8 text-small text-text">{name}</span>
+      <div className={`${cls} h-4 bg-project-studio`} />
+    </div>
+  ))}
+</div>
+</Unstyled>
