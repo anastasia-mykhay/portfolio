@@ -55,6 +55,18 @@ export const verdict = (ratio) =>
         ? "Лише великий текст (від 24 px або 19 px жирного)"
         : "Не проходить";
 
+export const FontSize = ({ token }) => {
+  const [text, setText] = useState("");
+  useEffect(() => {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--text-" + token)
+      .trim();
+    const m = raw.match(/^clamp\(\s*([\d.]+)px\s*,[^,]+,\s*([\d.]+)px\s*\)$/);
+    setText(m ? m[2] + " px" : raw.replace("px", " px"));
+  }, [token]);
+  return <span className="text-text-muted">{text}</span>;
+};
+
 export const ContrastTable = ({ pairs, mode = "text" }) => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
@@ -210,7 +222,11 @@ export const ContrastTable = ({ pairs, mode = "text" }) => {
       ].map(([name, role, cls]) => (
         <tr key={name} className="border-b border-line align-middle">
           <td className="py-4 pr-4 whitespace-nowrap">{name}</td>
-          <td className="py-4 pr-4">{role}</td>
+          <td className="py-4 pr-4">
+            {role}
+            <br />
+            <FontSize token={name.replace("text-", "")} />
+          </td>
           <td className="py-4">
             <span className={`font-sans ${cls} text-text`}>Hamburg Design 123</span>
           </td>
