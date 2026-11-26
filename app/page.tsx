@@ -7,12 +7,13 @@ export default function Home() {
       {/* Перший екран. Бічні поля: 24 px, а вміст не ширший за max-w-page. */}
       <section className="flex min-h-svh flex-col bg-canvas-dark px-6 pt-8 pb-6 text-text-on-dark">
         <div className="mx-auto flex w-full max-w-page flex-1 flex-col">
-          <header className="flex items-start justify-between gap-6">
+          {/* Якщо меню не вміщується поруч з імʼям, воно лишається зверху, а імʼя переходить нижче (wrap-reverse, тому items-end вирівнює по верху). */}
+          <header className="flex flex-wrap-reverse items-end justify-between gap-6">
             <p className="flex flex-col text-label uppercase">
               <span>Anastasiya</span>
               <span>M.</span>
             </p>
-            <nav aria-label="Main" className="flex gap-8">
+            <nav aria-label="Main" className="ml-auto flex gap-8">
               <NavLink href="#projects">Projects</NavLink>
               <NavLink href="#contact">Contact</NavLink>
             </nav>
