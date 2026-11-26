@@ -1,5 +1,6 @@
 ﻿import { Marker } from "@/components/Marker";
 import { NavLink } from "@/components/NavLink";
+import { ProjectsSection } from "./ProjectsSection";
 
 export default function Home() {
   return (
@@ -64,8 +65,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Цілі для якорів меню. Вміст секцій ще не перенесено. */}
-      <section id="projects" />
+      <ProjectsSection />
+
+      {/* Ціль для якоря меню. Вміст секції ще не перенесено. */}
       <section id="contact" />
     </main>
   );

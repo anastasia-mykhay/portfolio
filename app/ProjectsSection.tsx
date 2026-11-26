@@ -1,0 +1,155 @@
+import Image, { type StaticImageData } from "next/image";
+import { Pill } from "@/components/Pill";
+import { RoleItem } from "@/components/RoleItem";
+import miriHome from "@/assets/miri-home.png";
+import rentflowDashboard from "@/assets/rentflow-dashboard.png";
+import semaHomepage from "@/assets/sema-homepage.png";
+
+type Project = {
+  name: string;
+  subtitle: string;
+  meta: string;
+  question: string;
+  decision: string;
+  tags: string[];
+  /** Повний клас заливки, щоб Tailwind його побачив. */
+  fill: string;
+  /** Без screenshot картка показує заглушку. */
+  screenshot?: { src: StaticImageData; alt: string };
+};
+
+/* Порядок фіксований. Назви, мета й Question — з плану сайту, Decision і теги — з макета (у плані їх немає). */
+const projects: Project[] = [
+  {
+    name: "Miri",
+    subtitle: "AI concierge",
+    meta: "Mobile app · Concept · 2026",
+    question:
+      "How should the concierge get to know a guest who doesn’t want to be asked questions?",
+    decision:
+      "Preferences come from behavior, not questionnaires. It offers one suggestion at a time and declining works as a refinement.",
+    tags: ["Human–AI interaction", "Korean service culture", "Design system"],
+    fill: "bg-project-miri",
+    screenshot: {
+      src: miriHome,
+      alt: "Miri home screen with a proposed corner table",
+    },
+  },
+  {
+    name: "RentFlow",
+    subtitle: "Property management platform",
+    meta: "Web app · Concept · 2026",
+    question:
+      "How should AI speak to an owner, a tenant and a manager about the same property?",
+    decision:
+      "Each role gets its own dashboard, where AI suggests next to the numbers and the person decides.",
+    tags: ["Human–AI interaction", "Information architecture"],
+    fill: "bg-project-rentflow",
+    screenshot: {
+      src: rentflowDashboard,
+      alt: "RentFlow owner dashboard with an AI insight about pending payments",
+    },
+  },
+  {
+    name: "Studio",
+    subtitle: "AI concept boards",
+    meta: "Web app · In progress · 2026",
+    question:
+      "How can a designer use AI to assemble a concept board and still feel that every choice is theirs?",
+    decision:
+      "The AI only searches and combines real catalog items. The designer swaps any piece, the budget rebalances, and the client approves.",
+    tags: ["Human–AI interaction", "Design tools", "Real product data"],
+    fill: "bg-project-studio",
+  },
+  {
+    name: "SeMA",
+    subtitle: "Seoul Museum of Art website redesign",
+    meta: "Web redesign · Concept · 2026",
+    question:
+      "What happens when the findings of a UX audit are applied to an existing museum website?",
+    decision:
+      "The audit set the direction. The redesign followed it through the navigation, the exhibitions and the collection page.",
+    tags: ["UX audit", "Navigation redesign", "Visual hierarchy"],
+    fill: "bg-project-sema",
+    screenshot: { src: semaHomepage, alt: "Redesigned SeMA museum homepage" },
+  },
+];
+
+/** Блок Projects головної сторінки. Бічні поля й ширина такі самі, як у hero. */
+export function ProjectsSection() {
+  return (
+    <section
+      id="projects"
+      aria-labelledby="projects-title"
+      className="px-6 py-section"
+    >
+      <div className="mx-auto flex w-full max-w-page flex-col gap-8">
+        <div className="border-b border-line pb-6">
+          <h2 id="projects-title" className="text-display-l">
+            Projects
+          </h2>
+        </div>
+
+        {projects.map((project, index) => (
+          /* До lg одна колонка: текстова обгортка зникає (contents), і плашки стають після скріншота. */
+          <article
+            key={project.name}
+            className={`flex flex-col gap-8 rounded-card p-6 text-text lg:grid lg:grid-cols-2 lg:p-10 ${project.fill}`}
+          >
+            <div className="contents lg:flex lg:flex-col lg:justify-between lg:gap-8">
+              <p className="text-label uppercase">
+                {`0${index + 1} · ${project.meta}`}
+              </p>
+              <h3 className="text-display-m">
+                {project.name}
+                <span className="mt-3 block text-display-s">
+                  {project.subtitle}
+                </span>
+              </h3>
+              <div className="flex flex-col gap-3 border-t border-text/35 pt-4">
+                <RoleItem
+                  marker="hollow"
+                  title="Question"
+                  text={project.question}
+                />
+                <RoleItem
+                  marker="filled"
+                  title="Decision"
+                  text={project.decision}
+                />
+              </div>
+              <ul className="flex flex-wrap gap-2 max-lg:order-2">
+                {project.tags.map((tag) => (
+                  <li key={tag}>
+                    <Pill>{tag}</Pill>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* На компʼютері сторона скріншота чергується. */}
+            <div
+              className={`flex items-center justify-center max-lg:order-1 ${
+                index % 2 ? "lg:order-first" : ""
+              }`}
+            >
+              {project.screenshot ? (
+                /* Не більше за власний розмір файлу: тому телефон вузький, а дашборд широкий. */
+                <Image
+                  src={project.screenshot.src}
+                  alt={project.screenshot.alt}
+                  unoptimized
+                  className="h-auto max-w-full rounded-image shadow-screen"
+                />
+              ) : (
+                <p className="w-full rounded-image border border-dashed border-text/35 px-4 py-16 text-center text-small">
+                  Screens in progress
+                </p>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
