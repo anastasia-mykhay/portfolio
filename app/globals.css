@@ -89,6 +89,11 @@
      підходити до інших місць. */
   --container-page: 1232px; /* ширина контенту: max-w-page */
   --spacing-section: 64px; /* відстань між великими секціями: gap-section, pt-section тощо */
+
+  /* ---------- Розміри крапок і кілець ----------
+     Лише для розміру крапок і кілець (size-dot, size-ring), не для відступів. */
+  --spacing-dot: 10px;
+  --spacing-ring: calc(var(--spacing-dot) + 8px); /* кільце = крапка + 8px */
 }
 
 /* Шрифт підключено через next/font у app/fonts.ts, змінна --font-archivo.
