@@ -266,6 +266,18 @@ export const ContrastTable = ({ pairs, mode = "text" }) => {
 
 Токенів `--aspect-*` у системі немає: скріншоти показуємо в природних пропорціях без обрізання.
 
+## Рух кільця
+
+Токени `spacing-ring-travel` (шлях кільця) і `ease-ring` (крива руху) призначені лише для руху кільця. Шлях кільця дорівнює трьом крокам «крапка + проміжок `gap-3`» і рахується від `spacing-dot`. Наведіть мишу на темний блок: кільце пройде свій шлях.
+
+<Unstyled>
+<div className="group flex w-32 flex-col items-center gap-2 bg-canvas-dark p-4">
+  <div className="size-ring translate-y-ring-travel rounded-control border border-text-on-dark transition-transform duration-700 ease-ring group-hover:translate-y-0 motion-reduce:transition-none" />
+  <div className="h-16" />
+  <span className="text-small text-text-on-dark">translate-y-ring-travel, ease-ring</span>
+</div>
+</Unstyled>
+
 ## Відступи
 
 Окремих токенів немає, беремо 9 кроків шкали Tailwind: `1, 2, 3, 4, 6, 8, 10, 12, 16`.

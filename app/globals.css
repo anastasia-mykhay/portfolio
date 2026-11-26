@@ -94,6 +94,11 @@
      Лише для розміру крапок і кілець (size-dot, size-ring), не для відступів. */
   --spacing-dot: 10px;
   --spacing-ring: calc(var(--spacing-dot) + 8px); /* кільце = крапка + 8px */
+
+  /* ---------- Рух кільця ----------
+     ЛИШЕ ДЛЯ РУХУ КІЛЬЦЯ: не для відступів, розмірів чи інших переходів. */
+  --spacing-ring-travel: calc(3 * (var(--spacing-dot) + var(--spacing) * 3)); /* шлях кільця: 3 × (крапка + проміжок gap-3) */
+  --ease-ring: cubic-bezier(0.3, 0.7, 0.2, 1); /* крива руху кільця */
 }
 
 /* Шрифт підключено через next/font у app/fonts.ts, змінна --font-archivo.

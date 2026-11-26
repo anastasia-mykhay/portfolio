@@ -27,10 +27,12 @@
 - **Відступи**: окремо не оголошені, беремо 9 кроків шкали Tailwind: 4, 8, 12, 16, 24, 32, 40, 48, 64 px (`1, 2, 3, 4, 6, 8, 10, 12, 16`).
 - **Токени сторінки** (лише для сторінок, не для компонентів): `--container-page` (1232px, клас `max-w-page`) і `--spacing-section` (64px, класи `gap-section`, `pt-section` тощо).
 - **Крапки й кільця**: `--spacing-dot` (10px, клас `size-dot`) і `--spacing-ring` (крапка + 8px, клас `size-ring`). Лише для розміру крапок і кілець. Для відступів (`p-dot`, `gap-ring` тощо) не використовуй.
+- `--spacing-ring-travel`: шлях кільця (`translate-y-ring-travel`), лише для руху кільця.
+- `--ease-ring`: крива руху кільця (`ease-ring`), лише для руху кільця.
 
 ## Компоненти
 
-Заповнимо далі.
+- `BackToTop` (`components/BackToTop.tsx`): кнопка «Back to top», лише у футері на `canvas-dark`.
 
 ## Правила
 
