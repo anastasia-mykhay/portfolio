@@ -27,7 +27,7 @@ export default function Home() {
               <span className="block">interfaces</span>
             </h1>
 
-            <div className="relative mt-4 flex items-start gap-6 pr-16 max-lg:text-balance md:col-span-5 md:col-start-5 lg:pr-4 xl:pr-16 lg:col-span-3 lg:col-start-8 lg:row-start-4 lg:mt-0 lg:-translate-x-8 lg:-translate-y-16 lg:self-end">
+            <div className="relative mt-4 flex items-start gap-6 pr-16 max-lg:text-balance md:col-span-5 md:col-start-5 lg:pr-4 xl:pr-16 lg:col-span-3 lg:col-start-8 lg:row-start-4 lg:mt-0 lg:-translate-x-16 xl:-translate-x-8 lg:-translate-y-16 lg:self-end">
               <span className="flex h-lh shrink-0 items-center text-body">
                 <Marker variant="filled" className="text-project-miri" />
               </span>
