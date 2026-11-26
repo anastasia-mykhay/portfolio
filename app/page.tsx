@@ -18,15 +18,15 @@ export default function Home() {
             </nav>
           </header>
 
-          {/* На вузьких екранах колонка, від lg сітка 12 колонок і 4 рядки. */}
-          <div className="flex flex-1 flex-col justify-center py-8 lg:grid lg:grid-cols-12 lg:grid-rows-4 lg:gap-x-6">
-            <h1 className="mb-6 w-max max-w-full text-display-xl lg:col-span-full lg:row-span-4 lg:row-start-1 lg:mb-0 lg:self-center lg:justify-self-start">
+          {/* Абзаци стоять «сходинками»: на мобільному відступами зліва, від md у сітці 12 колонок, від lg ще й у 4 рядки. */}
+          <div className="flex flex-1 flex-col justify-center py-8 md:grid md:grid-cols-12 md:content-center md:gap-x-6 lg:grid-rows-4 lg:content-normal">
+            <h1 className="mb-10 w-max max-w-full text-display-xl md:col-span-full lg:row-span-4 lg:row-start-1 lg:mb-0 lg:self-center lg:justify-self-start">
               <span className="block text-right">I design</span>{" "}
               <em className="block">AI-assisted</em>{" "}
               <span className="block">interfaces</span>
             </h1>
 
-            <div className="relative mt-4 flex max-w-xs items-start gap-6 lg:col-span-2 lg:col-start-8 lg:row-start-4 lg:mt-0 lg:-translate-x-8 lg:-translate-y-16 lg:self-end">
+            <div className="relative mt-4 flex items-start gap-6 pr-16 max-lg:text-balance md:col-span-5 md:col-start-5 lg:pr-4 xl:pr-16 lg:col-span-3 lg:col-start-8 lg:row-start-4 lg:mt-0 lg:-translate-x-8 lg:-translate-y-16 lg:self-end">
               <span className="flex h-lh shrink-0 items-center text-body">
                 <Marker variant="filled" className="text-project-miri" />
               </span>
@@ -36,7 +36,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative mt-4 flex max-w-xs items-start gap-6 lg:col-span-3 lg:col-start-10 lg:row-start-4 lg:mt-0 lg:self-end">
+            <div className="relative mt-4 ml-16 flex max-w-xs items-start gap-6 max-md:self-end max-md:pl-4 max-lg:text-balance md:col-span-6 md:col-start-7 md:ml-0 md:justify-self-end lg:justify-self-auto lg:col-span-3 lg:col-start-10 lg:row-start-4 lg:mt-0 lg:self-end">
               <span className="flex h-lh shrink-0 items-center text-body">
                 <Marker variant="hollow" />
               </span>
