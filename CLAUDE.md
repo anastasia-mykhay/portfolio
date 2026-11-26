@@ -33,6 +33,7 @@
 ## Компоненти
 
 - `BackToTop` (`components/BackToTop.tsx`): кнопка «Back to top», лише у футері на `canvas-dark`.
+- `Pill` (`components/Pill.tsx`): плашка-тег на картках проєктів. Один варіант, станів немає (неінтерактивна).
 
 ## Правила
 
