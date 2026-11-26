@@ -1,11 +1,14 @@
 import Image, { type StaticImageData } from "next/image";
 import { Pill } from "@/components/Pill";
+import { ProjectRail, type ProjectRailEntry } from "@/components/ProjectRail";
 import { RoleItem } from "@/components/RoleItem";
 import miriHome from "@/assets/miri-home.png";
 import rentflowDashboard from "@/assets/rentflow-dashboard.png";
 import semaHomepage from "@/assets/sema-homepage.png";
 
 type Project = {
+  /** Ключ проєкту: колір крапки в рейці та id картки. */
+  key: ProjectRailEntry["project"];
   name: string;
   subtitle: string;
   meta: string;
@@ -21,6 +24,7 @@ type Project = {
 /* Порядок фіксований. Назви, мета й Question — з плану сайту, Decision і теги — з макета (у плані їх немає). */
 const projects: Project[] = [
   {
+    key: "miri",
     name: "Miri",
     subtitle: "AI concierge",
     meta: "Mobile app · Concept · 2026",
@@ -36,6 +40,7 @@ const projects: Project[] = [
     },
   },
   {
+    key: "rentflow",
     name: "RentFlow",
     subtitle: "Property management platform",
     meta: "Web app · Concept · 2026",
@@ -51,6 +56,7 @@ const projects: Project[] = [
     },
   },
   {
+    key: "studio",
     name: "Studio",
     subtitle: "AI concept boards",
     meta: "Web app · In progress · 2026",
@@ -62,6 +68,7 @@ const projects: Project[] = [
     fill: "bg-project-studio",
   },
   {
+    key: "sema",
     name: "SeMA",
     subtitle: "Seoul Museum of Art website redesign",
     meta: "Web redesign · Concept · 2026",
@@ -74,6 +81,20 @@ const projects: Project[] = [
     screenshot: { src: semaHomepage, alt: "Redesigned SeMA museum homepage" },
   },
 ];
+
+/* Номер і id рахуємо тут, щоб у рейки й карток вони завжди збігалися. */
+const entries = projects.map((project, index) => ({
+  ...project,
+  number: `0${index + 1}`,
+  targetId: `project-${project.key}`,
+}));
+
+const railItems: ProjectRailEntry[] = entries.map((entry, index) => ({
+  number: index + 1,
+  project: entry.key,
+  label: `Go to project ${entry.number}, ${entry.name}`,
+  targetId: entry.targetId,
+}));
 
 /** Блок Projects головної сторінки. Бічні поля й ширина такі самі, як у hero. */
 export function ProjectsSection() {
@@ -90,65 +111,76 @@ export function ProjectsSection() {
           </h2>
         </div>
 
-        {projects.map((project, index) => (
-          /* До lg одна колонка: текстова обгортка зникає (contents), і плашки стають після скріншота. */
-          <article
-            key={project.name}
-            className={`flex flex-col gap-8 rounded-card p-6 text-text lg:grid lg:grid-cols-2 lg:p-10 ${project.fill}`}
-          >
-            <div className="contents lg:flex lg:flex-col lg:justify-between lg:gap-8">
-              <p className="text-label uppercase">
-                {`0${index + 1} · ${project.meta}`}
-              </p>
-              <h3 className="text-display-m">
-                {project.name}
-                <span className="mt-3 block text-display-s">
-                  {project.subtitle}
-                </span>
-              </h3>
-              <div className="flex flex-col gap-3 border-t border-text/35 pt-4">
-                <RoleItem
-                  marker="hollow"
-                  title="Question"
-                  text={project.question}
-                />
-                <RoleItem
-                  marker="filled"
-                  title="Decision"
-                  text={project.decision}
-                />
-              </div>
-              <ul className="flex flex-wrap gap-2 max-lg:order-2">
-                {project.tags.map((tag) => (
-                  <li key={tag}>
-                    <Pill>{tag}</Pill>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* Обгортка обмежує sticky: рейка не виходить за блок із картками. */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:gap-6">
+          {/* До lg ряд на всю ширину екрана (поля повертає px-6), від lg стовпчик ліворуч. */}
+          <ProjectRail
+            items={railItems}
+            className="sticky top-0 z-10 max-lg:-mx-6 max-lg:px-6 lg:top-6 lg:w-rail lg:shrink-0 lg:self-start"
+          />
+          <div className="flex min-w-0 flex-1 flex-col gap-8">
+            {entries.map((project, index) => (
+              /* До lg одна колонка: текстова обгортка зникає (contents), і плашки стають після скріншота. */
+              <article
+                key={project.targetId}
+                id={project.targetId}
+                className={`flex scroll-mt-16 flex-col gap-8 rounded-card p-6 text-text lg:grid lg:scroll-mt-6 lg:grid-cols-2 lg:p-10 ${project.fill}`}
+              >
+                <div className="contents lg:flex lg:flex-col lg:justify-between lg:gap-8">
+                  <p className="text-label uppercase">
+                    {`${project.number} · ${project.meta}`}
+                  </p>
+                  <h3 className="text-display-m">
+                    {project.name}
+                    <span className="mt-3 block text-display-s">
+                      {project.subtitle}
+                    </span>
+                  </h3>
+                  <div className="flex flex-col gap-3 border-t border-text/35 pt-4">
+                    <RoleItem
+                      marker="hollow"
+                      title="Question"
+                      text={project.question}
+                    />
+                    <RoleItem
+                      marker="filled"
+                      title="Decision"
+                      text={project.decision}
+                    />
+                  </div>
+                  <ul className="flex flex-wrap gap-2 max-lg:order-2">
+                    {project.tags.map((tag) => (
+                      <li key={tag}>
+                        <Pill>{tag}</Pill>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            {/* На компʼютері сторона скріншота чергується. */}
-            <div
-              className={`flex items-center justify-center max-lg:order-1 ${
-                index % 2 ? "lg:order-first" : ""
-              }`}
-            >
-              {project.screenshot ? (
-                /* Не більше за власний розмір файлу: тому телефон вузький, а дашборд широкий. */
-                <Image
-                  src={project.screenshot.src}
-                  alt={project.screenshot.alt}
-                  unoptimized
-                  className="h-auto max-w-full rounded-image shadow-screen"
-                />
-              ) : (
-                <p className="w-full rounded-image border border-dashed border-text/35 px-4 py-16 text-center text-small">
-                  Screens in progress
-                </p>
-              )}
-            </div>
-          </article>
-        ))}
+                {/* На компʼютері сторона скріншота чергується. */}
+                <div
+                  className={`flex items-center justify-center max-lg:order-1 ${
+                    index % 2 ? "lg:order-first" : ""
+                  }`}
+                >
+                  {project.screenshot ? (
+                    /* Не більше за власний розмір файлу: тому телефон вузький, а дашборд широкий. */
+                    <Image
+                      src={project.screenshot.src}
+                      alt={project.screenshot.alt}
+                      unoptimized
+                      className="h-auto max-w-full rounded-image shadow-screen"
+                    />
+                  ) : (
+                    <p className="w-full rounded-image border border-dashed border-text/35 px-4 py-16 text-center text-small">
+                      Screens in progress
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
