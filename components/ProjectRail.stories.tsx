@@ -45,7 +45,7 @@ const description = `
 
 Місце рейки задає сторінка:
 
-- ширина колонки: у макеті 120 px, токена немає;
+- ширина колонки: клас \`lg:w-rail\` (токен \`--container-rail\`), лише для цієї рейки;
 - відстань до карток: у макеті 24 px, на вузькому екрані 16 px;
 - sticky-позиція рейки, а на вузькому екрані ще ряд на всю ширину;
 - на картках \`id\`, як у \`targetId\`, і \`scroll-margin\`, щоб рейка не закривала верх;
@@ -133,7 +133,7 @@ function Demo({
           /* Після зміни count рейка шукає блоки заново. */
           key={count}
           items={blocks.map((block) => block.entry)}
-          className="sticky top-0 z-10 max-lg:-mx-6 max-lg:px-6 lg:top-6 lg:w-16 lg:shrink-0 lg:self-start"
+          className="sticky top-0 z-10 max-lg:-mx-6 max-lg:px-6 lg:top-6 lg:w-rail lg:shrink-0 lg:self-start"
         />
         <div className="flex flex-1 flex-col gap-8">
           {blocks.map((block) => (
