@@ -37,6 +37,7 @@
 - `Marker` (`components/Marker.tsx`): декоративна крапка-маркер перед текстом. Варіанти `hollow` і `filled`, станів немає (неінтерактивна).
 - `NavLink` (`components/NavLink.tsx`): посилання меню у верхній смузі hero, лише на `canvas-dark`. Варіант один, стани default, hover і focus-visible.
 - `RoleItem` (`components/RoleItem.tsx`): пункт картки проєкту з крапкою, назвою й текстом (наприклад, «Question» і «Decision»). Варіанти крапки `hollow` і `filled`, станів немає (неінтерактивний).
+- `ProjectRailItem` (`components/ProjectRailItem.tsx`): пункт рейки проєктів (кнопка з крапкою й номером), лише на `canvas`. Один варіант, колір задає проп `project`; стани default, current, hover і focus-visible. Ширину задає батьківський елемент; кільце, вибір поточного пункту й прокрутка належать рейці. Не використовуй у рейці без кільця: без нього поточний пункт видно лише за кольором.
 
 ## Правила
 
