@@ -133,7 +133,8 @@ export function ProjectsSection() {
                   </p>
                   <h3 className="text-display-m">
                     {project.name}
-                    <span className="mt-3 block text-display-s">
+                    {/* На 1024–1279 px колонка найвужча, тому відступ 32 px, інакше довгий підзаголовок переноситься. */}
+                    <span className="mt-3 ml-12 block text-display-s lg:ml-8 xl:ml-12">
                       {project.subtitle}
                     </span>
                   </h3>
