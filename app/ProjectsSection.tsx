@@ -21,7 +21,7 @@ type Project = {
   screenshot?: { src: StaticImageData; alt: string };
 };
 
-/* Порядок фіксований. Назви, мета й Question — з плану сайту, Decision і теги — з макета (у плані їх немає). */
+/* Порядок фіксований. Тексти карток такі самі, як у макеті. */
 const projects: Project[] = [
   {
     key: "miri",
@@ -70,7 +70,7 @@ const projects: Project[] = [
   {
     key: "sema",
     name: "SeMA",
-    subtitle: "Seoul Museum of Art website redesign",
+    subtitle: "Museum website redesign",
     meta: "Web redesign · Concept · 2026",
     question:
       "What happens when the findings of a UX audit are applied to an existing museum website?",
@@ -118,7 +118,8 @@ export function ProjectsSection() {
             items={railItems}
             className="sticky top-0 z-10 max-lg:-mx-6 max-lg:px-6 lg:top-6 lg:w-rail lg:shrink-0 lg:self-start"
           />
-          <div className="flex min-w-0 flex-1 flex-col gap-8">
+          {/* Від lg усі картки заввишки як найвища: auto-rows-fr робить ряди рівними. */}
+          <div className="flex min-w-0 flex-1 flex-col gap-8 lg:grid lg:auto-rows-fr">
             {entries.map((project, index) => (
               /* До lg одна колонка: текстова обгортка зникає (contents), і плашки стають після скріншота. */
               <article
@@ -136,7 +137,8 @@ export function ProjectsSection() {
                       {project.subtitle}
                     </span>
                   </h3>
-                  <div className="flex flex-col gap-3 border-t border-text/35 pt-4">
+                  {/* lg:mt-8 разом із gap-8 колонки дає 64 px після підзаголовка. */}
+                  <div className="flex flex-col gap-3 border-t border-text/35 pt-4 lg:mt-8">
                     <RoleItem
                       marker="hollow"
                       title="Question"
