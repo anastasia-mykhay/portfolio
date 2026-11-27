@@ -14,7 +14,8 @@ export function SiteFooter() {
       <div className="px-6 pt-12">
         <div className="mx-auto flex w-full max-w-page flex-col gap-10">
           {/* Адреси ще немає, тому це текст-заглушка, а не посилання. У ній 26 символів, як у майбутній адресі. */}
-          <p className="text-email wrap-anywhere">
+          {/* ТИМЧАСОВО: ховер на заглушці, лише щоб подивитися. w-fit: спрацьовує тільки над текстом. */}
+          <p className="w-fit text-email wrap-anywhere hover:text-link-hover">
             [your.email@address.later]
           </p>
 
