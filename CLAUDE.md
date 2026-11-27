@@ -19,7 +19,7 @@
 Усі токени оголошені в блоці `@theme` у `app/globals.css`. Стандартні кольори, розміри тексту й радіуси Tailwind скинуті, тому працюють лише ці назви. Назви за роллю, не за кольором.
 
 - **Кольори** `--color-*`: `canvas`, `canvas-dark`, `text`, `text-on-dark`, `text-muted`, `text-muted-on-dark`, `line`, `line-dark`, `project-miri`, `project-rentflow`, `project-studio`, `project-sema`, `link-hover`. Кольори проєктів лише для заливок і маркерів, не для тексту на canvas. Текст на картках завжди `text`.
-- **Розміри тексту** `--text-*` (разом з висотою рядка, трекінгом і жирністю): `display-xl`, `display-l`, `display-m`, `display-s`, `body`, `label`, `label-strong`, `small`. Великі літери для `label` і `label-strong` додає компонент. Для email у футері мінімальний розмір 34 px (в `display-l` мінімум 56 px), це задає компонент.
+- **Розміри тексту** `--text-*` (разом з висотою рядка, трекінгом і жирністю): `display-xl`, `display-l`, `display-m`, `display-s`, `email`, `body`, `label`, `label-strong`, `small`. Великі літери для `label` і `label-strong` додає компонент. Для email у футері є окремий стиль `email` (від 20 до 84 px).
 - **Радіуси** `--radius-*`: `control` (9999px, плашки й круглі елементи), `card` (0px, картки з прямими кутами), `image` (12px, скріншоти).
 - **Тінь** `--shadow-screen` для скріншотів.
 - **Шрифт** `--font-sans`: Archivo (`next/font`, файл `app/fonts.ts`), запасний Arial. Кирилиці в Archivo немає, тому кириличний текст піде на Arial.
@@ -52,7 +52,8 @@
 - Display-розміри самі змінюються разом із шириною вікна. Не став для них пікселі й адаптивні розміри (`md:text-…`).
 - Який стиль для чого:
   - `display-xl`: заголовок hero.
-  - `display-l`: заголовок «Projects» і email у футері (для email мінімум 34 px).
+  - `display-l`: заголовок «Projects».
+  - `email`: лише email у футері. Підібраний, щоб адреса на 26 символів стояла в один рядок.
   - `display-m`: назва картки.
   - `display-s`: підзаголовок картки, а також окремий підзаголовок на сторінках кейсів.
   - `body`: основний текст.

@@ -34,11 +34,17 @@
   --text-display-xl--letter-spacing: 0;
   --text-display-xl--font-weight: 200;
 
-  /* Заголовок «Projects» і email у футері. Для email мінімум 34px (див. CLAUDE.md). */
+  /* Заголовок «Projects». */
   --text-display-l: clamp(56px, 9vw, 112px);
   --text-display-l--line-height: 1;
   --text-display-l--letter-spacing: -0.03em;
   --text-display-l--font-weight: 300;
+
+  /* Лише email у футері: адреса на 26 символів в один рядок. round() лишає тільки цілі пікселі. */
+  --text-email: clamp(20px, round(down, 6vw, 1px), 84px);
+  --text-email--line-height: 1;
+  --text-email--letter-spacing: -0.03em;
+  --text-email--font-weight: 300;
 
   --text-display-m: clamp(52px, 6.4vw, 84px); /* назва картки */
   --text-display-m--line-height: 0.95;

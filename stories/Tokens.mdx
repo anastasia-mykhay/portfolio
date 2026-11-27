@@ -61,7 +61,7 @@ export const FontSize = ({ token }) => {
     const raw = getComputedStyle(document.documentElement)
       .getPropertyValue("--text-" + token)
       .trim();
-    const m = raw.match(/^clamp\(\s*([\d.]+)px\s*,[^,]+,\s*([\d.]+)px\s*\)$/);
+    const m = raw.match(/^clamp\(\s*([\d.]+)px\s*,.+,\s*([\d.]+)px\s*\)$/);
     setText(m ? m[2] + " px" : raw.replace("px", " px"));
   }, [token]);
   return <span className="text-text-muted">{text}</span>;
@@ -200,6 +200,43 @@ export const ContrastTable = ({ pairs, mode = "text" }) => {
 
 Шрифт: `font-sans` (Archivo, запасний Arial). Великі літери для `label` і `label-strong` додає компонент (`uppercase`).
 
+Стилі `display-*` і `email` мають діапазон: розмір росте разом із шириною екрана, від найменшого до найбільшого. Адаптивні класи для цього не потрібні. Стилі `body`, `label`, `label-strong` і `small` мають один розмір на всіх екранах.
+
+<Unstyled>
+  <table className="mb-8 w-full border-collapse text-small text-text">
+    <thead>
+      <tr className="border-b border-line text-left">
+        <th className="py-2 pr-4">Клас</th>
+        <th className="py-2 pr-4">Діапазон</th>
+        <th className="py-2 pr-4">Телефон, 375 px</th>
+        <th className="py-2 pr-4">Планшет, 768 px</th>
+        <th className="py-2">Компʼютер, 1280 px</th>
+      </tr>
+    </thead>
+    <tbody>
+      {[
+        ["text-display-xl", "56–128 px", "56 px", "≈ 74 px", "≈ 123 px"],
+        ["text-display-l", "56–112 px", "56 px", "≈ 69 px", "112 px"],
+        ["text-email", "20–84 px", "22 px", "46 px", "76 px"],
+        ["text-display-m", "52–84 px", "52 px", "52 px", "≈ 82 px"],
+        ["text-display-s", "16–30 px", "16 px", "≈ 18 px", "≈ 29 px"],
+        ["text-body", "один розмір", "16 px", "16 px", "16 px"],
+        ["text-label, text-label-strong, text-small", "один розмір", "14 px", "14 px", "14 px"],
+      ].map(([name, range, phone, tablet, desktop]) => (
+        <tr key={name} className="border-b border-line">
+          <td className="py-2 pr-4">{name}</td>
+          <td className="py-2 pr-4">{range}</td>
+          <td className="py-2 pr-4">{phone}</td>
+          <td className="py-2 pr-4">{tablet}</td>
+          <td className="py-2">{desktop}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Unstyled>
+
+Нижче біля кожного стилю показано його найбільший розмір. Зразок має розмір, що відповідає ширині рамки перегляду.
+
 <Unstyled>
   <table className="w-full border-collapse text-small text-text">
     <thead>
@@ -212,7 +249,8 @@ export const ContrastTable = ({ pairs, mode = "text" }) => {
     <tbody>
       {[
         ["text-display-xl", "Заголовок hero", "text-display-xl"],
-        ["text-display-l", "Заголовок «Projects», email у футері", "text-display-l"],
+        ["text-display-l", "Заголовок «Projects»", "text-display-l"],
+        ["text-email", "Email у футері", "text-email"],
         ["text-display-m", "Назва картки", "text-display-m"],
         ["text-display-s", "Підзаголовок картки", "text-display-s"],
         ["text-body", "Основний текст", "text-body"],
