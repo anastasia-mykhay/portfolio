@@ -10,7 +10,7 @@
 - `app/`: сторінки (`page.tsx`) і секції головної (`ProjectsSection.tsx`, `SiteFooter.tsx`), `layout.tsx`, `globals.css` (токени), `fonts.ts`.
 - `components/`: компоненти, поруч історії `*.stories.tsx`. `stories/Tokens.mdx`: сторінка токенів.
 - `assets/`: картинки. Їх імпортують (`import miriHome from "@/assets/miri-home.png"`) і показують через `next/image`. Виняток: `app/favicon.ico`.
-- Команди: `npm run dev` (сайт, порт 3000), `npm run lint`, `npm run build` (збірка з перевіркою типів), `npm run storybook`, `npm run build-storybook`. Тестів немає.
+- Команди: `npm run dev` (сайт, порт 3000), `npm run lint`, `npm run build` (спершу Storybook у `public/storybook`, потім сайт: збірка Next.js з перевіркою типів), `npm run storybook`, `npm run build-storybook`. Тестів немає.
 
 ## Робота з Git
 
@@ -119,4 +119,4 @@
 ## Посилання
 
 - План сайту: `docs/portfolio-website-plan.md`
-- Storybook: публічної адреси в проєкті немає. Локально: `npm run storybook`, http://localhost:6006
+- Storybook: публікується разом із сайтом за шляхом `/storybook/`: https://portfolio-green-ten-17.vercel.app/storybook/. Локально: `npm run storybook`, http://localhost:6006
